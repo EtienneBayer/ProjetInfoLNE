@@ -48,7 +48,10 @@ public class NoeudSimple extends Noeud {
             NoeudSimple ns = new NoeudSimple(0,0,v1);
             ns.demandePx();
             ns.demandePy();
-             ns.toString();
+            System.out.println("quelle est l'ID du noeud");
+            int id = Lire.i();
+            ns.setId(id);
+            
             return(ns);
          
      }

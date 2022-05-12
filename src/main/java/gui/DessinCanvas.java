@@ -11,35 +11,6 @@ import javafx.scene.canvas.GraphicsContext;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 public class DessinCanvas extends Pane{
 private Canvas realCanvas;   
 

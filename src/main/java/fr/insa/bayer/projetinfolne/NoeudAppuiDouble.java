@@ -43,6 +43,9 @@ public class NoeudAppuiDouble extends NoeudAppui {
             NoeudAppuiDouble nAd = new NoeudAppuiDouble(0,0,v3);
             nAd.demandePx();
             nAd.demandePy();
+            System.out.println("quelle est l'ID du noeud");
+            int id = Lire.i();
+            nAd.setId(id);
             
             return(nAd);
          

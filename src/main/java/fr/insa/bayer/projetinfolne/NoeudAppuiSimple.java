@@ -44,6 +44,9 @@ public class NoeudAppuiSimple extends NoeudAppui {
             NoeudAppuiSimple nAs = new NoeudAppuiSimple(0,0,v2);
             nAs.demandePx();
             nAs.demandePy();
+            System.out.println("quelle est l'ID du noeud");
+            int id = Lire.i();
+            nAs.setId(id);
             
             return(nAs);
          

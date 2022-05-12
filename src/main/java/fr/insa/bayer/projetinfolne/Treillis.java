@@ -91,8 +91,8 @@ public class Treillis {
            Object noeuasuppr;
             noeuasuppr=Noeudcherche(tabns, tabnAs, tabnAd);
            int typeNoeud = nbrInconnues(noeuasuppr);
-           
-           if (typeNoeud==1){
+           System.out.println("le type de noeud "+typeNoeud);
+           if (typeNoeud==0){
                NoeudSimple nsasuppr = new NoeudSimple();
                
                nsasuppr=(NoeudSimple)noeuasuppr;
@@ -100,7 +100,7 @@ public class Treillis {
                listBarres.remove(nsasuppr.getbarresDepart());
                tabns.remove(nsasuppr);
            }
-           if (typeNoeud==2){
+           if (typeNoeud==1){
                NoeudAppuiSimple nAsasuppr = new NoeudAppuiSimple();
                
                nAsasuppr=(NoeudAppuiSimple)noeuasuppr;
@@ -108,7 +108,7 @@ public class Treillis {
                listBarres.remove(nAsasuppr.getbarresDepart());
                tabnAs.remove(nAsasuppr);
            }
-           if (typeNoeud==3){
+           if (typeNoeud==2){
                NoeudAppuiDouble nAdasuppr = new NoeudAppuiDouble();
                
                nAdasuppr=(NoeudAppuiDouble)noeuasuppr;
@@ -252,18 +252,21 @@ public class Treillis {
         for(int i=0;i<tabns.size();i++)
         {
             System.out.print(tabns.get(i).toString()+" ");
+            System.out.println("");
         }
-         System.out.println();
+         System.out.println("");
          for(int i=0;i<tabnAs.size();i++)
         {
             System.out.print(tabnAs.get(i).toString()+" ");
+            System.out.println("");
         }
-         System.out.println();
+         System.out.println("");
          for(int i=0;i<tabnAd.size();i++)
         {
             System.out.print(tabnAd.get(i).toString()+" ");
+            System.out.println("");
         }
-         System.out.println();
+         System.out.println("");
          
          
          
