@@ -57,6 +57,40 @@ public class Barre {
         
         return b;
     }
+     //calcul le coeff directeur de la barre
+    public double coefDir(){
+        double coefDir; 
+        //traitement de la barre (entre 2 noeuds) en tant que segment (entre 2 points) :
+        Point p1 = new Point(99,this.nd.getPx(),this.nd.getPy());
+        Point p2 = new Point(99,this.na.getPx(),this.na.getPy());
+        Segment s = new Segment(p1,p2);
+        
+        double deltaX = s.getP2().getAbscisse()-s.getP1().getAbscisse();
+        double deltaY = s.getP2().getOrdonnee()-s.getP1().getOrdonnee();
+        if(deltaX == 0){
+           // if(deltaY<0){
+               // return -10000; //valeur finie pour représenter les vecteurs verticaux (évite erreur valeur infinie)
+            //}
+            //else{
+                return 10000; //valeur finie pour représenter les vecteurs verticaux (évite erreur valeur infinie)
+           // }    
+        }
+        else{
+            /*
+            if(deltaX>0){
+                System.out.println("delta X:"+deltaX);
+                System.out.println("delta y:"+deltaY);
+                return deltaY/deltaX;//(yb-ya)/(xb-xa)
+            }
+            else{
+                System.out.println("delta X:"+deltaX);
+                System.out.println("delta y:"+deltaY);
+                return -deltaY/deltaX;
+            }
+            */
+            return deltaY/deltaX;
+        }
+    }
     
     public Barre ChoisiBarre(ArrayList<Barre>listBarres){
         System.out.println("quelle est l'ID de la barre");

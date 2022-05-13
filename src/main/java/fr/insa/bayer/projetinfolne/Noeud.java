@@ -13,8 +13,8 @@ import java.util.ArrayList;
  */
 public abstract class Noeud {
     private int  id=-1;
-    private double px;
-    private double py;
+    protected double px;
+    protected double py;
     private Vecteur2D v;
     private   ArrayList<Barre>BarreDepart =new ArrayList<Barre>() ;
     private   ArrayList<Barre>BarreArrivee =new ArrayList<Barre>() ;
@@ -53,6 +53,9 @@ public abstract class Noeud {
         this.v=V;  
         this.BarreArrivee=new ArrayList<Barre>();
         this.BarreDepart=new ArrayList<Barre>();
+    }
+    public Noeud(int id){
+        this.id=id;
     }
        
     //public Noeud trouvetonnoeud (double PX, double PY){

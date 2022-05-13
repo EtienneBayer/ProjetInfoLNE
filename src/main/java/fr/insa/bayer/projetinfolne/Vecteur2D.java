@@ -11,6 +11,9 @@ package fr.insa.bayer.projetinfolne;
 public class Vecteur2D {
     private double vx;
     private double vy;
+    private Noeud noeud;
+    private double coefDir;
+    private double valeur;
     
     public Vecteur2D(double cx,double cy ){
         this.vx=cx;
@@ -27,6 +30,31 @@ public class Vecteur2D {
             v1.demandeVy();
             return(v1);
      }
+    
+    
+      //méthodes normales
+    public double projX(){
+        if(this.coefDir>9999){  //évite erreurs avec vecteurs vetticaux
+            return 0;
+        }
+        else{
+            return this.valeur*java.lang.Math.cos(java.lang.Math.atan(this.coefDir)); //norme*cos(angle avec l'horizontale)
+        }
+    }
+    public double projY(){
+        if(this.coefDir>9999){ 
+            return this.valeur;
+        }
+        else{
+           return this.valeur*java.lang.Math.sin(java.lang.Math.atan(this.coefDir));  //norme*sin(angle avec l'horizontale)     
+        }
+    }
+    
+    
+    
+    
+    
+    
     
     
     
@@ -53,6 +81,41 @@ public class Vecteur2D {
     }
      public void setVy(double cy){
         this.vy=cy;
+    }
+
+    /**
+     * @return the noeud
+     */
+    public Noeud getNoeud() {
+        return noeud;
+    }
+
+    /**
+     * @return the coefDir
+     */
+    public double getCoefDir() {
+        return coefDir;
+    }
+
+    /**
+     * @param coefDir the coefDir to set
+     */
+    public void setCoefDir(double coefDir) {
+        this.coefDir = coefDir;
+    }
+
+    /**
+     * @return the valeur
+     */
+    public double getValeur() {
+        return valeur;
+    }
+
+    /**
+     * @param valeur the valeur to set
+     */
+    public void setValeur(double valeur) {
+        this.valeur = valeur;
     }
     
     

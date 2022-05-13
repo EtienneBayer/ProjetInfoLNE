@@ -5,7 +5,7 @@
 package fr.insa.bayer.projetinfolne;
 
 import java.util.ArrayList;
-
+import matrice.Matrice;
 /**
  *
  * @author etien
@@ -38,7 +38,9 @@ public class Test {
         ArrayList<NoeudAppuiDouble>tabnAd ;
         tabnAd=new ArrayList<NoeudAppuiDouble> (10);
         
-        
+        Matrice M = new Matrice (3,3);
+        M = M.matAleaZeroUnDeux(4, 4, 0);
+        System.out.println(M.toString());
        treillis.MenuTexte();
       
         

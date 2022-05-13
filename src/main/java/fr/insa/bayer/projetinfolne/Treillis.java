@@ -17,6 +17,12 @@ import java.util.ArrayList;
 public class Treillis {
     private   ArrayList<Barre>listBarres;
     private   ArrayList<Noeud>listNoeuds;
+    private   ArrayList<NoeudAppui>listNoeudsAppui;
+    private   ArrayList<NoeudSimple>listNoeudsSimple;
+    private   ArrayList<NoeudAppuiSimple>listNoeudsAppuiSimple;
+    private   ArrayList<NoeudAppuiDouble>listNoeudsAppuiDouble;
+    private   ArrayList<Vecteur2D>listVecteur2D;
+    
     
     public  void MenuTexte(){
         ArrayList<Barre>listBarres = new ArrayList<Barre>();
@@ -152,7 +158,7 @@ public class Treillis {
     public void SupprBarre (ArrayList<Barre>listBarres){
         System.out.println("quelle est l'ID de la barre");
         int idcherche=Lire.i();
-        this.listBarres=listBarres;
+        this.setListBarres(listBarres);
         for(int i=0;i<listBarres.size();i++){
             if (listBarres.get(i).getID()==idcherche){
                 listBarres.remove(listBarres.get(i));
@@ -274,7 +280,7 @@ public class Treillis {
     }
     
      public int maxIdNoeud (ArrayList<Noeud> listNoeuds){
-         this.listNoeuds=listNoeuds;
+         this.setListNoeuds(listNoeuds);
          int i,max=0;
          
          for (i=0;i<listNoeuds.size();i++){
@@ -285,7 +291,7 @@ public class Treillis {
          return (max); 
      }
      public int maxIdBarre (ArrayList<Barre> listBarres){
-         this.listBarres=listBarres;
+         this.setListBarres(listBarres);
          int i,max=0;
          
          for (i=0;i<listBarres.size();i++){
@@ -297,48 +303,112 @@ public class Treillis {
      }
      
      public void ajouteNoeud(Noeud n){
-      if (listNoeuds.contains(n)){
+      if (getListNoeuds().contains(n)){
           System.out.print("le noeud est déja dans contenu dans le treillis");
       }else{
-          n.setId(maxIdNoeud(listNoeuds)+1);
-          listNoeuds.add(n);
+          n.setId(maxIdNoeud(getListNoeuds())+1);
+            getListNoeuds().add(n);
           
       }   
      }
      public void ajouteBarre(Barre b){
-      if (listBarres.contains(b)){     
+      if (getListBarres().contains(b)){     
           System.out.print("le noeud est déja dans contenu dans le treillis");
       }else{
-          if(listNoeuds.contains(b.getNd())){
+          if(getListNoeuds().contains(b.getNd())){
              //on fait rien   
             }else{
-              listNoeuds.add(b.getNd());             
+                getListNoeuds().add(b.getNd());             
           }
-          if(listNoeuds.contains(b.getNa())){
+          if(getListNoeuds().contains(b.getNa())){
              //on fait rien   
             }else{
-              listNoeuds.add(b.getNa());             
+                getListNoeuds().add(b.getNa());             
           }
           
-          b.setID(maxIdNoeud(listNoeuds)+1);
-          listBarres.add(b);
+          b.setID(maxIdNoeud(getListNoeuds())+1);
+            getListBarres().add(b);
           
       }   
      }
+
+    /**
+     * @return the listBarres
+     */
+    public ArrayList<Barre> getListBarres() {
+        return listBarres;
+    }
+
+    /**
+     * @param listBarres the listBarres to set
+     */
+    public void setListBarres(ArrayList<Barre> listBarres) {
+        this.listBarres = listBarres;
+    }
+
+    /**
+     * @return the listNoeuds
+     */
+    public ArrayList<Noeud> getListNoeuds() {
+        return listNoeuds;
+    }
+
+    /**
+     * @param listNoeuds the listNoeuds to set
+     */
+    public void setListNoeuds(ArrayList<Noeud> listNoeuds) {
+        this.listNoeuds = listNoeuds;
+    }
+
+    /**
+     * @return the listNoeudsAppui
+     */
+    public ArrayList<NoeudAppui> getListNoeudsAppui() {
+        return listNoeudsAppui;
+    }
+
+    /**
+     * @return the listNoeudsAppuiSimple
+     */
+    public ArrayList<NoeudAppuiSimple> getListNoeudsAppuiSimple() {
+        return listNoeudsAppuiSimple;
+    }
+
+    /**
+     * @return the listNoeudsAppuiDouble
+     */
+    public ArrayList<NoeudAppuiDouble> getListNoeudsAppuiDouble() {
+        return listNoeudsAppuiDouble;
+    }
+
+    /**
+     * @return the listNoeudsSimple
+     */
+    public ArrayList<NoeudSimple> getListNoeudsSimple() {
+        return listNoeudsSimple;
+    }
+
+    /**
+     * @return the listVecteur2D
+     */
+    public ArrayList<Vecteur2D> getListVecteur2D() {
+        return listVecteur2D;
+    }
+
+    /**
+     * @param listVecteur2D the listVecteur2D to set
+     */
+    public void setListVecteur2D(ArrayList<Vecteur2D> listVecteur2D) {
+        this.listVecteur2D = listVecteur2D;
+    }
     
     
     
-    public ArrayList<Barre> getlistBarres(){
-        return (this.listBarres);
-    }
-    public ArrayList<Noeud> getlistNoeuds(){
-        return (this.listNoeuds);
-    }
-     public void setlistBarres(ArrayList<Barre> barres) {
-        this.listBarres = barres;
-    }
-    public void setlistNoeuds(ArrayList<Noeud>noeuds) {
-        this.listNoeuds = noeuds;
-    }
+   
+
+    
+
+  
+
     
 }
