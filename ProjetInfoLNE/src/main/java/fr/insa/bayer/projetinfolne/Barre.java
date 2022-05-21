@@ -43,10 +43,9 @@ public class Barre {
    
     
     public  Barre CreerBarre(Noeud n1,Noeud n2){
-        System.out.println("shiiiiiiiiii");
-        
+               
         Barre b =new Barre(-1,n1,n2,0,0,0);
-        System.out.println("quelle est est son ID");
+        System.out.println("quelle est l'ID de la Barre");
         b.ID=Lire.i();
         System.out.println("quelle est est sa traction max");
         b.tracmax=Lire.i();
@@ -57,41 +56,7 @@ public class Barre {
         
         return b;
     }
-     //calcul le coeff directeur de la barre
-    public double coefDir(){
-        double coefDir; 
-        //traitement de la barre (entre 2 noeuds) en tant que segment (entre 2 points) :
-        Point p1 = new Point(99,this.nd.getPx(),this.nd.getPy());
-        Point p2 = new Point(99,this.na.getPx(),this.na.getPy());
-        Segment s = new Segment(p1,p2);
-        
-        double deltaX = s.getP2().getAbscisse()-s.getP1().getAbscisse();
-        double deltaY = s.getP2().getOrdonnee()-s.getP1().getOrdonnee();
-        if(deltaX == 0){
-           // if(deltaY<0){
-               // return -10000; //valeur finie pour représenter les vecteurs verticaux (évite erreur valeur infinie)
-            //}
-            //else{
-                return 10000; //valeur finie pour représenter les vecteurs verticaux (évite erreur valeur infinie)
-           // }    
-        }
-        else{
-            /*
-            if(deltaX>0){
-                System.out.println("delta X:"+deltaX);
-                System.out.println("delta y:"+deltaY);
-                return deltaY/deltaX;//(yb-ya)/(xb-xa)
-            }
-            else{
-                System.out.println("delta X:"+deltaX);
-                System.out.println("delta y:"+deltaY);
-                return -deltaY/deltaX;
-            }
-            */
-            return deltaY/deltaX;
-        }
-    }
-    
+       
     public Barre ChoisiBarre(ArrayList<Barre>listBarres){
         System.out.println("quelle est l'ID de la barre");
         int idcherche=Lire.i();
@@ -116,6 +81,7 @@ public class Barre {
         
     }
     
+    /**
     public Double Angle3(Barre barre){
         double deltaX = barre.getNa().getPx()-barre.getNd().getPx();
        double deltaY =barre.getNa().getPy()-barre.getNd().getPy();
@@ -144,7 +110,7 @@ public class Barre {
         System.out.println();
         return Math.atan(quotient);
     }
-    
+    **/
     
     public int getID(){
         return (this.ID);
@@ -187,7 +153,7 @@ public class Barre {
     }
     @Override
     public String toString(){
-        return("LA BARRE: [id : "+getID()+" son noeud de depart "+getNd()+" son noeud d'arrivee "+getNa()+" sa traction max "+getTracmax()+" sa compression max :"+getCompressmax()+" et son cout "+getCout());
+        return("LA BARRE: [id : "+getID()+" son noeud de depart "+getNd()+" son noeud d'arrivee "+getNa()+" sa traction max "+getTracmax()+" sa compression max :"+getCompressmax()+" et son cout "+getCout()+"]");
     } 
     
     

@@ -10,21 +10,18 @@ import java.util.ArrayList;
  * @author etien
  */
 public class NoeudAppuiDouble extends NoeudAppui {
-    public NoeudAppuiDouble(int ID, double PX, double PY, Vecteur2D V,ArrayList<Barre> barreArrivee,ArrayList<Barre> barreDepart){
-        super(ID,PX,PY,V,barreArrivee,barreDepart);   
-    }
-    public NoeudAppuiDouble(int ID,double PX, double PY, Vecteur2D V){
-       super(ID,PX,PY,V);      
+    public NoeudAppuiDouble(int ID, double PX, double PY,ArrayList<Barre> barreArrivee,ArrayList<Barre> barreDepart){
+        super(ID,PX,PY,barreArrivee,barreDepart);   
     }
     public NoeudAppuiDouble(int ID,double PX, double PY){
-      super(ID,PX,PY);      
+       super(ID,PX,PY);      
     }
     public NoeudAppuiDouble(){
       super();      
     }
     @Override
     public String toString(){
-        return("Le Point : [id : "+getId() +" px:"+getPx()+" py:"+getPy()+" force:"+getV().toString() );
+        return("Le NoeudAppuiDouble : [id : "+getId() +" px:"+getPx()+" py:"+getPy()+"]");
     }
      public  ArrayList<Barre> barreIncidentes (Noeud noeud){
     {
@@ -37,10 +34,8 @@ public class NoeudAppuiDouble extends NoeudAppui {
      }
     }
       public  NoeudAppuiDouble creerNoeudAppuiDouble(){
-          Vecteur2D v3=new Vecteur2D(0,0);
-           v3=v3.creerVecteur();
-            
-            NoeudAppuiDouble nAd = new NoeudAppuiDouble(1,0,0,v3);
+          
+            NoeudAppuiDouble nAd = new NoeudAppuiDouble(1,0,0);
             nAd.demandePx();
             nAd.demandePy();
             System.out.println("quelle est l'ID du noeud");

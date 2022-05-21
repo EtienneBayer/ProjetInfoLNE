@@ -55,9 +55,29 @@ public class Matrice {
         }
        return res;
     }
+    
+    public boolean VerifTaillMatrice (Matrice matrice){
+        boolean VerifFalse = false;
+        
+        if(matrice.getNbrCol()==matrice.getNbrLig()){ //si la matrice est carré
+            return true;
+        }
+       return VerifFalse;
+        
+    }
+    public boolean VerifResoluTreilli (Treillis treillis){
+        boolean VerifFalse = false;
+        if (2*treillis.getListNoeuds().size()==treillis.getListBarres().size()+treillis.getListNoeudsAppuiSimple().size()+2*treillis.getListNoeudsAppuiDouble().size()){
+            return true; //pour que le treillis soit solvable il faut 
+        }
+      return VerifFalse;
+    }
+    
+    
     public Matrice systeme3(Treillis treillis){
-        Matrice coeff = new Matrice (2*treillis.getListNoeuds().size(),2*treillis.getListNoeuds().size());  //Matrice des coeffcicients
-        Matrice cst = new Matrice(2*treillis.getListNoeuds().size(),1);//Matrice des forces (ex : Px=-1000N)
+        int TailleMatrice = treillis.getListBarres().size()+treillis.getListNoeudsSimple().size()+2*treillis.getListNoeudsAppuiDouble().size();  //la taille de la matrice est nb+nAs+2*nAd
+        Matrice coeff = new Matrice (TailleMatrice,TailleMatrice);  //Matrice des coeffcicients
+        Matrice cst = new Matrice(TailleMatrice,1);//Matrice des forces (ex : Px=-1000N)
         int l =0;
         int CnAd=treillis.getListNoeuds().size();//CnAd est la variable des colonnes pour les nAd après que les tractions des noeuds ont été placé dans la matrice
         int CnAs=(treillis.getListNoeuds().size()+2*treillis.getListNoeudsAppuiDouble().size());//CnAs est la variable des colonnes pour les nAs après que les tractions des noeuds et les reactions des nAd  ont été placé dans la matrice
@@ -66,37 +86,55 @@ public class Matrice {
         
         System.out.println("CnAd "+CnAd);
         System.out.println("CnAs "+CnAs);
-        for(int n=0;n<treillis.getListNoeuds().size();n++){  //la philosophie est de s'occupé noeud par noeud du treillis (S1,S2,S3...) sur deuc lignes (x et y)
-            CnAd=treillis.getListNoeuds().size();
-            CnAs=(treillis.getListNoeuds().size()+2*treillis.getListNoeudsAppuiDouble().size());
-            
-            Noeud noeud=treillis.getListNoeuds().get(n); // le noeud n etudié
-            coeff=ProjectionTraction5(coeff, treillis, l,noeud); // remplissage de la matrice des tractions des tractions des barres dont fait partie le noeud n
-            
-            for(int N=0;N<treillis.getListNoeuds().size();N++){ // on parcours de nouveau la liste des noeuds du treillis
-                coeff=ProjectionReactionAd(coeff, treillis, l, noeud,N,CnAd);
-                CnAd=CnAd+2; // les reactions des nAd prennent 2 colonnes par noeuds (et 2 lignes aussi)
-            }
-            
-            for(int N2=0;N2<treillis.getListNoeudsAppuiSimple().size();N2++){
-                coeff=ProjectionReactionAs(coeff, treillis, l, noeud, treillis.getListNoeudsAppuiSimple().get(N2), CnAs);
-                CnAs=CnAs+1;
-            }
-          
-           cst=ProjectionForce(cst, treillis, l, noeud);
-           System.out.println(cst.toString());
-            l=l+2;// les tractions des barres prennent 2 lignes par noeuds
-        }
         
+        System.out.println(VerifTaillMatrice(coeff));    
+        System.out.println(VerifResoluTreilli(treillis));
+        boolean verifSoluble= VerifResoluTreilli(treillis);
+        boolean verifTaille= coeff.VerifTaillMatrice(coeff);
+        if(verifTaille==true){
+        
+            if (verifSoluble==true){
+        
+                for(int n=0;n<treillis.getListNoeuds().size();n++){  //la philosophie est de s'occuper noeud par noeud du treillis (S1,S2,S3...) sur deuc lignes (x et y)
+                    CnAd=treillis.getListNoeuds().size();
+                    CnAs=(treillis.getListNoeuds().size()+2*treillis.getListNoeudsAppuiDouble().size());
+
+                    Noeud noeud=treillis.getListNoeuds().get(n); // le noeud n etudié
+                    coeff=ProjectionTraction5(coeff, treillis, l,noeud); // remplissage de la matrice des tractions des tractions des barres dont fait partie le noeud n
+
+                    for(int N=0;N<treillis.getListNoeuds().size();N++){ // on parcours de nouveau la liste des noeuds du treillis
+                        coeff=ProjectionReactionAd(coeff, treillis, l, noeud,N,CnAd);
+                        CnAd=CnAd+2; // les reactions des nAd prennent 2 colonnes par noeuds (et 2 lignes aussi)
+                    }
+
+                    for(int N2=0;N2<treillis.getListNoeudsAppuiSimple().size();N2++){
+                        coeff=ProjectionReactionAs(coeff, treillis, l, noeud, treillis.getListNoeudsAppuiSimple().get(N2), CnAs);
+                        CnAs=CnAs+1;
+                    }
+
+                    cst=ProjectionForce(cst, treillis, l, noeud);
+                    System.out.println(cst.toString());
+                     l=l+2;// les tractions des barres prennent 2 lignes par noeuds
+                 }
+            }else{
+                 System.out.println("la matrice n'est pas soluble");
+             }
+             
+        }else{
+            System.out.println("la matrice n'est pas carré");
+        }
         System.out.println(coeff.toString());
-        return coeff.concatCol(cst);
+             return coeff.concatCol(cst);
     }
     
+    
     public Matrice ProjectionForce(Matrice CoeffForce, Treillis treillis, int l, Noeud noeud){
-         System.out.println("trou de balle "+noeud.toString()+"  nbr incconue "+nbrInconnues(noeud)+" vx "+noeud.getV().getVx()+" vy "+noeud.getV().getVy()); 
+         //System.out.println("coucou "+noeud.toString()+"  nbr incconue "+nbrInconnues(noeud)+" vx "+noeud.getV().getVx()+" vy "+noeud.getV().getVy());
+        
         if(nbrInconnues(noeud)==0){
-            CoeffForce.set(l, 0, -noeud.getV().getVx());
-            CoeffForce.set(l+1, 0, -noeud.getV().getVy());
+             NoeudSimple ns=(NoeudSimple)noeud; //converti le noeud en Noeud simple
+            CoeffForce.set(l, 0, -ns.getV().getVx());
+            CoeffForce.set(l+1, 0, -ns.getV().getVy());
         }
     return CoeffForce;
     }
@@ -172,109 +210,6 @@ public class Matrice {
     }
     
     
-    
-    public  Matrice systeme2 (Treillis treillis){
-        Matrice coeffTract = new Matrice (2*treillis.getListNoeuds().size(),2*treillis.getListNoeuds().size());   //la taillr de la matrice est 2 fois le nb de noeuds
-        Matrice cst = new Matrice(2*treillis.getListNoeuds().size(),1);
-        
-        ProjectionTraction4(coeffTract, 2*treillis.getListNoeuds().size(),2*treillis.getListNoeuds().size() , treillis);
-        
-       
-        return coeffTract;
-    }
-     public Matrice ProjectionTraction4 (Matrice coeffs,int l, int c, Treillis treillis){
-        Matrice Traction = new Matrice (l,c);
-        System.out.println(treillis.getListBarres().size());
-        System.out.println(treillis.getListNoeuds().size());
-        System.out.println(l);
-        System.out.println(c);
-        System.out.println();
-        System.out.println();
-        
-        for (int i=0;i<treillis.getListBarres().size();i++){
-            
-            for(int j=0;j<treillis.getListNoeuds().size();j=j+2){
-                if(treillis.getListBarres().get(i).getNd()==treillis.getListNoeuds().get(j)||treillis.getListBarres().get(i).getNa()==treillis.getListNoeuds().get(j)){
-                    coeffs.set(i, j, Math.cos(Angle2(treillis.getListBarres().get(j).getNd(), treillis.getListBarres().get(j).getNa())));
-                    coeffs.set(i+1,j, Math.sin(Angle2(treillis.getListBarres().get(j).getNd(), treillis.getListBarres().get(j).getNa())));
-                    System.out.println( Math.cos(Angle2(treillis.getListBarres().get(j).getNd(), treillis.getListBarres().get(j).getNa())));
-                    System.out.println(Math.sin(Angle2(treillis.getListBarres().get(j).getNd(), treillis.getListBarres().get(j).getNa())));
-                    System.out.println(j);
-               }
-               else{
-                 coeffs.set(i, j, 0);
-                 coeffs.set(i, j+1, 0);
-                 System.out.println(j);
-                }
-                
-            }
-        }
-        System.out.println(coeffs.toString());
-        return coeffs;
-    }
-    
-    public Matrice ProjectionTraction3 (Matrice coeffs,int nbLigne, int nbCol,Treillis treillis,Noeud noeud){
-        for (int i=0;i<nbLigne;i=i+2){
-            for(int j=0;j<nbCol;j++){
-                if(noeud==treillis.getListBarres().get(j).getNd()||noeud==treillis.getListBarres().get(j).getNa()){
-                    
-                
-                coeffs.set(i, j, Math.cos(treillis.getListBarres().get(j).Angle2(treillis.getListBarres().get(j).getNd(), treillis.getListBarres().get(j).getNa())));
-                coeffs.set(i+1, j, Math.cos(treillis.getListBarres().get(j).Angle2(treillis.getListBarres().get(j).getNd(), treillis.getListBarres().get(j).getNa())));
-                }
-              
-            }
-        }
-        return coeffs;
-    }
-   
-    
-    public Matrice ProjectionTraction2 ( Matrice coeffs, int l , int c, int n, int b ,Treillis treillis ){
-        if(treillis.getListNoeuds().get(n)==treillis.getListBarres().get(n).getNd()||treillis.getListNoeuds().get(n)==treillis.getListBarres().get(n).getNa()){ 
-          //ici il faut que les coeffs des noeuds qui composent les  barres apparaissent une seul fois, d'ou le if
-          double angle_barre= Angle2(treillis.getListBarres().get(b).getNd(),treillis.getListBarres().get(b).getNa());  //sinon ça fait des enormes lignes de codes
-          // 3 possibilités : la barre est " penchée" vers la droite et les angles sont positifs
-                            // la barre est "droite" 
-          
-          
-        if (treillis.getListNoeuds().get(n).getPx()<treillis.getListBarres().get(b).getNd().getPx()||treillis.getListNoeuds().get(n).getPx()<treillis.getListBarres().get(b).getNd().getPx()){         
-          coeffs.set(l, c, arrondi(Math.cos(angle_barre)));
-        coeffs.set(l+1,c,arrondi(Math.sin(angle_barre)));
-        }else {
-                if(treillis.getListBarres().get(b).coefDir()==10000){ // si barre verticale
-                    if(treillis.getListNoeuds().get(n).getPy()<treillis.getListBarres().get(b).getNd().getPy()||treillis.getListNoeuds().get(n).getPy()<treillis.getListBarres().get(b).getNd().getPy()){ //si noeud est en bas
-                        coeffs.set(l+1,c,arrondi(Math.sin(angle_barre)));//remplie matrice coeffs avec projection traction sur axe y
-                    }
-                    if(treillis.getListNoeuds().get(n).getPy()>treillis.getListBarres().get(b).getNd().getPy()||treillis.getListNoeuds().get(n).getPy()>treillis.getListBarres().get(b).getNd().getPy()){ //si noeud est en bas
-                        coeffs.set(l+1,c,arrondi(-Math.sin(angle_barre)));//remplie matrice coeffs avec projection traction sur axe y
-                    }
-                }
-                else{ //noeuds est à l'extrémité droite
-                    coeffs.set(l,c,arrondi(-Math.cos(angle_barre))); //remplie matrice coeffs avec projection traction sur axe x
-                    coeffs.set(l+1,c,arrondi(-Math.sin(angle_barre)));//remplie matrice coeffs avec projection traction sur axe y
-                }// a est bien en radian car atan retourne un angle en radians
-            }
-    }  
-        return coeffs;
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     public static Matrice identite(int n){  
         Matrice id = new Matrice(n,n);
         for(int i=0;i<n;i++){
@@ -283,7 +218,8 @@ public class Matrice {
         return id;
     }
     
-    public static Matrice matTest1(int n){
+    /**
+       public static Matrice matTest1(int n){
         Matrice mat = new Matrice(n,n);
         double k=0;
         for(int i=0;i<n;i++){
@@ -321,7 +257,7 @@ public class Matrice {
         }
         return m;
     }
-    
+    **/
     public static Matrice creeVecteur (double[] coeffs){
         Matrice mat = new Matrice(coeffs.length,1);
         for(int i=0;i<coeffs.length;i++){
@@ -329,13 +265,13 @@ public class Matrice {
         }
         return mat;
     }
-    
+    /**
     public static Matrice test1(double pz) {
         Matrice m;
         m = matAleaZeroUnDeux(4,6,pz);  //construit une matrice avec P(0) = pz et P(1)=P(2)
         return m;
     }
-    
+    **/
     //c'est mieux de faire des méthodes statiques pour les concaténations
     public Matrice concatLig (Matrice mat2){
         int nl1 = this.nbrLig;
@@ -432,7 +368,7 @@ public class Matrice {
     public static int intAlea (int bMin, int bMax){
         return (int) ( (Math.random()*(bMax-bMin))+ bMin );
     }
-    
+    /**
     public static void test2(){
         int nl = intAlea(2,4);
         int nc = intAlea(2,4);
@@ -448,7 +384,7 @@ public class Matrice {
         Mbis = Mbis.subCols(0, nc-1);
         System.out.println(Mbis.toString());
     }
-    
+    **/
     public Matrice add(Matrice m2) {
         if (this.getNbrLig() != m2.getNbrLig() || this.getNbrCol() != m2.getNbrCol()) {
             throw new Error("tailles incompatibles pour add");
@@ -492,13 +428,13 @@ public class Matrice {
         }
         return res;
     }
-    
+    /**
     public static void test3(){
         Matrice m = Matrice.matTest1(3);
         System.out.println("m*m^2 :");
         System.out.println(m.add(m.mult(m)).toString());
     }
-    
+    **/
     public int permuteLigne(int l1, int l2){
         int egal=0;  //compte le nb de coeffs égaux entre les deux lignes
         double temp;
@@ -567,7 +503,7 @@ public class Matrice {
         for(col=0;col<this.nbrCol-2;col++){  //ne traite ni la dernière colonne (coeffs) ni l'avant dernière (élément diagonal)
             System.out.println("etape "+col+" :");
             //if(this.coeffs[col][col]==0){  //si pivot nul
-                int iMax = this.lignePlusGrandPivot(col);
+                int iMax = this.lignePlusGrandPivot(col); //il regarde le plus grand pivot de la ligne actuelle
                 if(iMax==-1){
                     System.out.println("pas de pivot trouve");
                     System.out.println("matrice non inversible");  
@@ -599,7 +535,7 @@ public class Matrice {
         resultat.signature = sigPermut;
         return resultat;
     }
-    
+    /**
     //test du pivot de Gauss sur les matrices MatTest1 et MatTest2 :
     public static void test4 (int n){  
         //création des coeffs d'un vecteur ;
@@ -624,7 +560,7 @@ public class Matrice {
         System.out.println(m.toString());
         m.descenteGauss();
     }
-    
+    **/
      public ResGauss remonteeGauss(){  //similaire à descente Gauss
         int col; //compteur de étapes = nombre de colonnes de la matrice à inverser
         ResGauss resultat = new ResGauss();
@@ -684,7 +620,7 @@ public class Matrice {
         }
 
     }
-    
+    /**
      //méthode qui construit matrices associées au treilli
     public static Matrice systeme(Treillis treillis){
         Matrice coeffs=new Matrice(2*treillis.getListNoeuds().size(),2*treillis.getListNoeuds().size()); //nb lignes=nb colonnes=2*nb noeuds nb colonnes
@@ -773,7 +709,7 @@ public class Matrice {
             }
         return cst;
     }
-    
+    **/
     
     public static double arrondi(double d){
         if(d>0 && d<Math.pow(10,-2)|| d<0 && d>-Math.pow(10,-2)){
@@ -783,6 +719,7 @@ public class Matrice {
             return d;
         }
     }
+    /**
      public Double Angle2 (Noeud Nd, Noeud Na){
        double deltaX = Na.getPx()-Nd.getPx();
        double deltaY =Na.getPy()-Nd.getPy();
@@ -825,6 +762,7 @@ public class Matrice {
         return Math.atan(quotient);
         
     }
+    * */
     //ULTRA IMPORTANT dans l'exemple que nous étudions, l'axe des y est vers le BAS !!!!!!!!!!!!!!!!!!!!!!!!! j'en ai transpiré !!!!!!
       public double Angle_barre5(Barre barre,Noeud noeud){                         // c'est une méthode compliqué à comprendre sans schéma
        double deltaX = barre.NoeudOppose(noeud, barre).getPx()-noeud.getPx();     // On calcule l'angle avec artan, tan=(Pya-Pyd)/(Pxa-Pxd)
@@ -867,7 +805,7 @@ public class Matrice {
     //On sait que cos = adjacent/hypothenuse
     //Avec adjacent = X(autre point)-X(ce point)
     //Et hypothenuse => pythagore
-    
+    /**
      public double cosAlpha(Barre b,Noeud n) {
         Noeud Nd=n;
         Noeud Na=b.NoeudOppose(Nd, b);
@@ -892,6 +830,7 @@ public class Matrice {
         salpha = (Na.getPy()-Nd.getPx())/hypothenuse;
         return salpha;
     }
+    * */
      public  int  nbrInconnues(Object noeud){
            if (noeud.getClass() == NoeudSimple.class) {
             return(0);

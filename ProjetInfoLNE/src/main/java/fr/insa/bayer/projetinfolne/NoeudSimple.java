@@ -10,14 +10,14 @@ import java.util.ArrayList;
  * @author etien
  */
 public class NoeudSimple extends Noeud {
-   
+   private Vecteur2D v;
     public NoeudSimple(int ID, double PX, double PY, Vecteur2D V,ArrayList<Barre> barreArrivee,ArrayList<Barre> barreDepart){
-        super(ID,PX,PY,V,barreArrivee,barreDepart);   
-        
+        super(ID,PX,PY,barreArrivee,barreDepart);   
+        this.v=V;
     }
     public NoeudSimple(int ID,double PX, double PY, Vecteur2D V){
-       super(ID,PX,PY,V); 
-       
+       super(ID,PX,PY); 
+       this.v=V;
     }
     public NoeudSimple(int ID,double PX, double PY){
       super(ID,PX,PY);      
@@ -34,7 +34,7 @@ public class NoeudSimple extends Noeud {
     
     @Override
     public String toString(){
-        return("Le Point : [id : "+getId() +" px:"+getPx()+" py:"+getPy()+" force:"+getV().toString());
+        return("Le NoeudSimple : [id : "+getId() +" px:"+getPx()+" py:"+getPy()+" force:"+getV().toString())+"]";
     }
 
    
@@ -61,13 +61,24 @@ public class NoeudSimple extends Noeud {
             int id = Lire.i();
             
             ns.setId(id);
-            System.out.println("quelle est l'angle OX et noeud-terrain (pi/2 = 1.570796327, pi/3 = 1.047197, pi/4=0.7853981, 3pi/4=2.35619449)");
-            ns.setAngle_ns(Lire.d());
-            
-            
+                    
             return(ns);
          
      }
+
+    /**
+     * @return the v
+     */
+    public Vecteur2D getV() {
+        return v;
+    }
+
+    /**
+     * @param v the v to set
+     */
+    public void setV(Vecteur2D v) {
+        this.v = v;
+    }
 
     /**
      * @return the Angle_ns

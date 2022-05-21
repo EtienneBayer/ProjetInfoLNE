@@ -15,32 +15,23 @@ public abstract class Noeud {
     private int  id=-1;
     protected double px;
     protected double py;
-    private Vecteur2D v;
+    
     private   ArrayList<Barre>BarreDepart =new ArrayList<Barre>() ;
     private   ArrayList<Barre>BarreArrivee =new ArrayList<Barre>() ;
     
-    public Noeud(int ID, double PX, double PY, Vecteur2D V,ArrayList<Barre> barreArrivee,ArrayList<Barre> barreDepart){
+    public Noeud(int ID, double PX, double PY, ArrayList<Barre> barreArrivee,ArrayList<Barre> barreDepart){
         this.id=ID;
         this.px=PX;
         this.py=PY;
-        this.v=V;
+        
         this.BarreArrivee=barreArrivee;
         this.BarreDepart=barreDepart;
     }
-    public Noeud(int ID,double PX, double PY, Vecteur2D V){
-        this.id=ID;
-        this.px=PX;
-        this.py=PY;
-        this.v=V; 
-        this.BarreArrivee=new ArrayList<Barre>();
-        this.BarreDepart=new ArrayList<Barre>();
-    }
     public Noeud(int ID,double PX, double PY){
-        Vecteur2D V=new Vecteur2D(0.0,0.0);
         this.id=ID;
         this.px=PX;
         this.py=PY;
-        this.v=V;  
+       
         this.BarreArrivee=new ArrayList<Barre>();
         this.BarreDepart=new ArrayList<Barre>();
     }
@@ -50,7 +41,7 @@ public abstract class Noeud {
         this.id=-1;
         this.px=-1000;
         this.py=-1000;
-        this.v=V;  
+        
         this.BarreArrivee=new ArrayList<Barre>();
         this.BarreDepart=new ArrayList<Barre>();
     }
@@ -68,7 +59,7 @@ public abstract class Noeud {
    
     
      public String toString(){
-       return "Le Point : [id : "+this.id +" px:"+this.px+" py:"+this.py+" force:"+this.v.toString() ;
+       return "Le Point : [id : "+this.id +" px:"+this.px+" py:"+this.py ;
     
     } 
    
@@ -90,9 +81,7 @@ public abstract class Noeud {
     public double getPy(){
         return (this.py);
     }
-    public Vecteur2D getV(){
-        return (this.v);
-    }
+    
     public int getId(){
         return (this.id);
     }
@@ -115,7 +104,7 @@ public abstract class Noeud {
     
     
     public void demandePx(){
-        System.out.println(" quelle es la coordonnee px");
+        System.out.println(" quelle est la coordonnee px");
        double pX=Lire.d();  
         this.px=pX  ;
     }

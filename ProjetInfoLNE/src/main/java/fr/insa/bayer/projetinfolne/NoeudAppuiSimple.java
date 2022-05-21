@@ -11,26 +11,22 @@ import java.util.ArrayList;
  */
 public class NoeudAppuiSimple extends NoeudAppui {
      private double Angle_nAs;
-    public NoeudAppuiSimple(int ID, double PX, double PY, Vecteur2D V,ArrayList<Barre> barreArrivee,ArrayList<Barre> barreDepart){
-        super(ID,PX,PY,V,barreArrivee,barreDepart);
+    public NoeudAppuiSimple(int ID, double PX, double PY,ArrayList<Barre> barreArrivee,ArrayList<Barre> barreDepart){
+        super(ID,PX,PY,barreArrivee,barreDepart);
         this.Angle_nAs=-1.570796327;
     }
-    public NoeudAppuiSimple(int ID,double PX, double PY, Vecteur2D V){
-       super(ID,PX,PY,V);      
+    public NoeudAppuiSimple(int ID,double PX, double PY){
+       super(ID,PX,PY);      
        this.Angle_nAs=-1.570796327;
     }
-    public NoeudAppuiSimple(int ID,double PX, double PY){
-      super(ID,PX,PY);      
-      this.Angle_nAs=-1.570796327;
-    }
-    public NoeudAppuiSimple(){
+       public NoeudAppuiSimple(){
         super();
         this.Angle_nAs=-1.570796327;
     }
     
     @Override
     public String toString(){
-        return("Le Point : [id : "+getId() +" px:"+getPx()+" py:"+getPy()+" force:"+getV().toString()+"angle "+getAngle_nAs() );
+        return("Le NoeudAppuiSimple: [id : "+getId() +" px:"+getPx()+" py:"+getPy()+" angle "+getAngle_nAs() +"]");
     }
      public  ArrayList<Barre> barreIncidentes (Noeud noeud){
     {
@@ -43,17 +39,15 @@ public class NoeudAppuiSimple extends NoeudAppui {
      }
     }
      public  NoeudAppuiSimple creerNoeudAppuiSimple(){
-          Vecteur2D v2=new Vecteur2D(0,0);
-            v2=v2.creerVecteur();
-            
-            NoeudAppuiSimple nAs = new NoeudAppuiSimple(1,0,0,v2);
+                    
+            NoeudAppuiSimple nAs = new NoeudAppuiSimple(1,0,0);
             nAs.demandePx();
             nAs.demandePy();
             System.out.println("quelle est l'ID du noeud");
             int id = Lire.i();
             nAs.setId(id);
-            System.out.println("quelle est l'Angle du noeud OX, terrain fictif");
-            
+            System.out.println("quelle est l'Angle du noeud OX, terrain fictif    (-pi/2)= -1.570796327             ");
+            nAs.Angle_nAs=Lire.d();
             return(nAs);
          
      }

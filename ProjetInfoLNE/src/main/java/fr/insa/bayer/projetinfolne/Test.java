@@ -6,24 +6,28 @@ package fr.insa.bayer.projetinfolne;
 
 import java.util.ArrayList;
 import matrice.Matrice;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+ 
 /**
  *
  * @author etien
  */
 public class Test {
     public static void main (String[] args){
-        /**
-        Vecteur2D v1 =new Vecteur2D(0, 0) ;
-        v1=v1.creerVecteur();
-        System.out.println(v1.toString());
-        NoeudSimple ns = new NoeudSimple();
-        ns=ns.creerNoeudSimple();
-        System.out.println(ns.toString());
-         */      
+        
+        
+               
         ArrayList<Barre>listBarres = new ArrayList<Barre>();
         ArrayList<Noeud>listNoeuds = new ArrayList<Noeud>();
         Treillis treillis = new Treillis(listBarres,listNoeuds);
-       
+        
+        
+       /**
         double cx,cy;
         
         ArrayList<Vecteur2D>tabv ;
@@ -93,7 +97,7 @@ public class Test {
        m2.resolution();
        
        treillis.testMatriceTreillis();
-       
+       **/
        
        
        treillis.MenuTexte();

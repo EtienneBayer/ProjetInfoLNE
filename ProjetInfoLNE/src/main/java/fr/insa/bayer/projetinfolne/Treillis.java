@@ -31,14 +31,169 @@ public class Treillis {
     public Treillis(){
         ArrayList<Barre>listBarres = new ArrayList<Barre>();
         ArrayList<Noeud>listNoeuds = new ArrayList<Noeud>(); 
+        ArrayList<NoeudAppui>listNoeudsAppui = new ArrayList<NoeudAppui>() ;
+        ArrayList<NoeudSimple>listNoeudsSimple=new ArrayList<NoeudSimple>();
+        ArrayList<NoeudAppuiSimple>listNoeudsAppuiSimple=new ArrayList<NoeudAppuiSimple>();
+        ArrayList<NoeudAppuiDouble>listNoeudsAppuiDouble=new ArrayList<NoeudAppuiDouble>();
+        ArrayList<Vecteur2D>listVecteur2D= new ArrayList<Vecteur2D>();
         this.listBarres=listBarres;
         this.listNoeuds = listNoeuds;
+        this.listNoeudsAppui=listNoeudsAppui;
+        this.listNoeudsSimple=listNoeudsSimple;
+        this.listNoeudsAppuiSimple=listNoeudsAppuiSimple;
+        this.listNoeudsAppuiDouble=listNoeudsAppuiDouble;
+        this.listVecteur2D=listVecteur2D;
     } 
     
+     public  void MenuTexte(){
+         /**
+        ArrayList<Barre>listBarres = new ArrayList<Barre>();
+        ArrayList<NoeudSimple>tabns ;
+        tabns=new ArrayList<NoeudSimple> (10);
+         
+        ArrayList<NoeudAppuiSimple>tabnAs ;
+        tabnAs=new ArrayList<NoeudAppuiSimple> (10);
+        
+        ArrayList<NoeudAppuiDouble>tabnAd ;
+        tabnAd=new ArrayList<NoeudAppuiDouble> (10);
+        **/
+        Treillis treillis = new Treillis();
+                    
+        
+        
+        System.out.println(" (1) afficher le treillis");
+        System.out.println(" (2) creer un nouveau noeud");
+        System.out.println(" (3) créer une nouvelle barre entre deux noeuds existants");
+        System.out.println(" (4) supprimer une barre");
+        System.out.println(" (5) supprimer une noeud");
+        System.out.println(" (6) Afficher la matrice résolution du treillis ");
+        System.out.println(" (0) quitter");
+    
+        int choix = Lire.i();
+        while (choix!=0){
+
+
+        if (choix==1){
+
+            affichTreillis(treillis.getListNoeudsSimple(),treillis.getListNoeudsAppuiSimple(),treillis.getListNoeudsAppuiDouble(),treillis.getListBarres());
+            System.out.println("");
+        }
+        if (choix==2){
+        
+            int a =ChoixtypeNoeud();
+            if (a==1){
+                NoeudSimple ns = new NoeudSimple();
+              
+          
+                ns=((NoeudSimple) ENTRENOEUD(treillis.getListNoeudsSimple(),treillis.getListNoeudsAppuiSimple(),treillis.getListNoeudsAppuiDouble(), a));  //ici, on converti un objet en noeud Simple pour le mettre dans ns
+                treillis.listNoeudsSimple.add(ns);  
+                treillis.listNoeuds.add(ns);
+            }
+        
+            if (a==2){
+                NoeudAppuiSimple nAs;
+                nAs=(NoeudAppuiSimple) ENTRENOEUD(treillis.getListNoeudsSimple(), treillis.getListNoeudsAppuiSimple(), treillis.getListNoeudsAppuiDouble(), a);
+                treillis.listNoeudsAppuiSimple.add(nAs);
+                treillis.listNoeuds.add(nAs);
+            }
+            if (a==3){ 
+                NoeudAppuiDouble nAd;
+                nAd=(NoeudAppuiDouble) ENTRENOEUD(treillis.getListNoeudsSimple(), treillis.getListNoeudsAppuiSimple(), treillis.getListNoeudsAppuiDouble(), a);
+                treillis.listNoeudsAppuiDouble.add(nAd);
+                treillis.listNoeuds.add(nAd);
+            }
+        }
+        if (choix==3){
+
+           Noeud n1=Noeudcherche(treillis.getListNoeudsSimple(),treillis.getListNoeudsAppuiSimple(),treillis.getListNoeudsAppuiDouble());
+           Noeud n2=Noeudcherche(treillis.getListNoeudsSimple(),treillis.getListNoeudsAppuiSimple(),treillis.getListNoeudsAppuiDouble());
+           Barre b = new Barre(1,n1,n2);
+           System.out.println("coucou");
+           b=b.CreerBarre(n1, n2);
+           System.out.println("la barre cree entre 2 noeuds :");
+           System.out.println(b.toString());
+           treillis.listBarres.add(b);
+           System.out.println("");
+           affichbarre(treillis.listBarres);
+           System.out.println("");
+
+        }
+        if (choix==4){
+            SupprBarre(treillis.listBarres);
+            affichbarre(treillis.listBarres);
+            System.out.println("");
+       }
+       if (choix==5){
+           Object noeuasuppr;
+            noeuasuppr=Noeudcherche(treillis.getListNoeudsSimple(),treillis.getListNoeudsAppuiSimple(),treillis.getListNoeudsAppuiDouble());
+           int typeNoeud = nbrInconnues(noeuasuppr);
+           System.out.println("le type de noeud "+typeNoeud);
+           if (typeNoeud==0){
+               NoeudSimple nsasuppr = new NoeudSimple();
+               
+               nsasuppr=(NoeudSimple)noeuasuppr;
+               treillis.listBarres.remove(nsasuppr.getbarresArrivee());
+               treillis.listBarres.remove(nsasuppr.getbarresDepart());
+               treillis.listNoeudsSimple.remove(nsasuppr);
+               treillis.listNoeuds.remove(nsasuppr);
+               
+           }
+           if (typeNoeud==1){
+               NoeudAppuiSimple nAsasuppr = new NoeudAppuiSimple();
+               
+               nAsasuppr=(NoeudAppuiSimple)noeuasuppr;
+               treillis.listBarres.remove(nAsasuppr.getbarresArrivee());
+               treillis.listBarres.remove(nAsasuppr.getbarresDepart());
+               treillis.listNoeudsAppuiSimple.remove(nAsasuppr);
+               treillis.listNoeuds.remove(nAsasuppr);
+           }
+           if (typeNoeud==2){
+               NoeudAppuiDouble nAdasuppr = new NoeudAppuiDouble();
+               
+               nAdasuppr=(NoeudAppuiDouble)noeuasuppr;
+               treillis.listBarres.remove(nAdasuppr.getbarresArrivee());
+               treillis.listBarres.remove(nAdasuppr.getbarresDepart());
+               treillis.listNoeudsAppuiDouble.remove(nAdasuppr);
+               treillis.listNoeuds.remove(nAdasuppr);
+           }
+           affichnoeud(treillis.getListNoeudsSimple(),treillis.getListNoeudsAppuiSimple(),treillis.getListNoeudsAppuiDouble());
+           System.out.println("");
+           
+           
+           
+           
+        }
+       if (choix==6){
+            Terrain terrain = new Terrain(-50, 50, -50, 50);
+            int TailleMatrice = treillis.getListBarres().size()+treillis.getListNoeudsSimple().size()+2*treillis.getListNoeudsAppuiDouble().size();  //la taille de la matrice est nb+nAs+2*nAd
+            System.out.println("TailleMatrice "+TailleMatrice);
+            
+            
+            
+            Matrice matrice = new Matrice(TailleMatrice,TailleMatrice+1);
+            
+                
+                    matrice=matrice.systeme3(treillis);
+                    System.out.println(matrice.toString());
+                    matrice.resolution();
+                 
+            }   
+       
+        System.out.println(" (1) afficher le treillis");
+        System.out.println(" (2) creer un nouveau noeud");
+        System.out.println(" (3) créer une nouvelle barre entre deux noeuds existants");
+        System.out.println(" (4) supprimer une barre");
+        System.out.println(" (5) supprimer une noeud");
+        System.out.println(" (6) Afficher la matrice résolution du treillis ");
+        System.out.println(" (0) quitter");
+        choix = Lire.i();
+        
+    }
+     }
     
     public void testMatriceTreillis (){
         Terrain terrain = new Terrain(-50, 50, -50, 50);            //creation terrain
-        TriangleTerrain.test1(); //TT de coordonnées 00 ,0-2, 11    creation triangle terrain
+       
         
         NoeudAppuiDouble S1 = new NoeudAppuiDouble(1,0, 0);          //creation des noeuds
         NoeudAppuiSimple S2 = new NoeudAppuiSimple(2,0, 2);
@@ -106,15 +261,38 @@ public class Treillis {
        }
             
     
-    public void affichTreillis(ArrayList<NoeudSimple>tabns,ArrayList<NoeudAppuiSimple>tabnAs,ArrayList<NoeudAppuiDouble>tabnAd,ArrayList<Barre>listBarres){
-       
-       affichbarre(listBarres);
-       System.out.println("");
-       affichnoeud(tabns,tabnAs,tabnAd);
-                
-    }
+   
      public  Noeud Noeudcherche(ArrayList<NoeudSimple> tabns,ArrayList<NoeudAppuiSimple> tabnAs,ArrayList<NoeudAppuiDouble> tabnAd){      
+       System.out.println("quelle est l'id du noeud cherche ?");
+      int IDn1 = Lire.i();
+      
+      
+       for (int i=0;i<tabns.size();i++){
+             if ((tabns.get(i).getId()==IDn1)){
+                 System.out.println(tabns.get(i).toString()+"son nombre d'inconnues "+nbrInconnues(tabns.get(i))) ;
+                 return(tabns.get(i));
+               
+             }  
+         }
+         for (int i=0;i<tabnAs.size();i++){
+             if ((tabnAs.get(i).getId()==IDn1)){
+                 System.out.println(tabnAs.get(i).toString()+"son nombre d'inconnues "+nbrInconnues(tabnAs.get(i)) );
+                 return(tabnAs.get(i));
+             }  
+         }
+         for (int i=0;i<tabnAd.size();i++){
+             if ((tabnAd.get(i).getId()==IDn1)){
+                 System.out.println(tabnAd.get(i).toString()+"son nombre d'inconnues "+nbrInconnues(tabnAd.get(i)) );
+                return(tabnAd.get(i));
+             }  
+         }
+         System.out.println("le noeud n'existe pas");
+       return(null);
+    }
        
+       
+       
+       /**
         System.out.println("quelle sont les coordonnees cx et cy du point recherchees ?");
         double cx,cy;
         
@@ -143,6 +321,7 @@ public class Treillis {
          System.out.println("le noeud n'existe pas");
        return(null);
     }
+    * */
         public  Object ENTRENOEUD(ArrayList<NoeudSimple> tabns,ArrayList<NoeudAppuiSimple> tabnAs,ArrayList<NoeudAppuiDouble> tabnAd,int a){
      if (a==1){
           NoeudSimple ns= new NoeudSimple();
@@ -162,7 +341,13 @@ public class Treillis {
          System.out.println("le noeud  Appui Double creer : "+nAd.toString());    
          return(nAd);
      }
-             
+         public void affichTreillis(ArrayList<NoeudSimple>tabns,ArrayList<NoeudAppuiSimple>tabnAs,ArrayList<NoeudAppuiDouble>tabnAd,ArrayList<Barre>listBarres){
+       
+       affichbarre(listBarres);
+       System.out.println("");
+       affichnoeud(tabns,tabnAs,tabnAd);
+                
+    }  
     
     
     public void affichbarre (ArrayList<Barre>listBarres){
@@ -253,120 +438,7 @@ public class Treillis {
           
       }   
      }
-     public  void MenuTexte(){
-        ArrayList<Barre>listBarres = new ArrayList<Barre>();
-        ArrayList<NoeudSimple>tabns ;
-        tabns=new ArrayList<NoeudSimple> (10);
-         
-        ArrayList<NoeudAppuiSimple>tabnAs ;
-        tabnAs=new ArrayList<NoeudAppuiSimple> (10);
-        
-        ArrayList<NoeudAppuiDouble>tabnAd ;
-        tabnAd=new ArrayList<NoeudAppuiDouble> (10);
-        
-        
-        System.out.println(" (1) afficher le treillis");
-        System.out.println(" (2) creer un nouveau noeud");
-        System.out.println(" (3) créer une nouvelle barre entre deux noeuds existants");
-        System.out.println(" (4) supprimer une barre");
-        System.out.println(" (5) supprimer une noeud");
-        System.out.println(" (0) quitter");
     
-        int choix = Lire.i();
-        while (choix!=0){
-
-
-        if (choix==1){
-
-            affichTreillis(tabns,tabnAs,tabnAd,listBarres);
-            System.out.println("");
-        }
-        if (choix==2){
-        
-            int a =ChoixtypeNoeud();
-            if (a==1){
-                NoeudSimple ns = new NoeudSimple();
-              
-          
-                ns=((NoeudSimple) ENTRENOEUD(tabns, tabnAs, tabnAd, a));  //ici, on converti un objet en noeud Simple pour le mettre dans ns
-                tabns.add(ns);  
-            }
-        
-            if (a==2){
-                NoeudAppuiSimple nAs;
-                nAs=(NoeudAppuiSimple) ENTRENOEUD(tabns, tabnAs, tabnAd, a);
-                tabnAs.add(nAs);
-            }
-            if (a==3){ 
-                NoeudAppuiDouble nAd;
-                nAd=(NoeudAppuiDouble) ENTRENOEUD(tabns, tabnAs, tabnAd, a);
-                tabnAd.add(nAd);      
-            }
-        }
-        if (choix==3){
-
-           Noeud n1=Noeudcherche(tabns, tabnAs, tabnAd);
-           Noeud n2= Noeudcherche(tabns, tabnAs, tabnAd); 
-           Barre b = new Barre(1,n1,n2);
-           System.out.println("coucou");
-           b=b.CreerBarre(n1, n2);
-           System.out.println("la barre cree entre 2 noeuds :");
-           System.out.println(b.toString());
-           listBarres.add(b);
-           affichbarre(listBarres);
-           System.out.println("");
-
-        }
-        if (choix==4){
-            SupprBarre(listBarres);
-            affichbarre(listBarres);
-            System.out.println("");
-       }
-       if (choix==5){
-           Object noeuasuppr;
-            noeuasuppr=Noeudcherche(tabns, tabnAs, tabnAd);
-           int typeNoeud = nbrInconnues(noeuasuppr);
-           System.out.println("le type de noeud "+typeNoeud);
-           if (typeNoeud==0){
-               NoeudSimple nsasuppr = new NoeudSimple();
-               
-               nsasuppr=(NoeudSimple)noeuasuppr;
-               listBarres.remove(nsasuppr.getbarresArrivee());
-               listBarres.remove(nsasuppr.getbarresDepart());
-               tabns.remove(nsasuppr);
-           }
-           if (typeNoeud==1){
-               NoeudAppuiSimple nAsasuppr = new NoeudAppuiSimple();
-               
-               nAsasuppr=(NoeudAppuiSimple)noeuasuppr;
-               listBarres.remove(nAsasuppr.getbarresArrivee());
-               listBarres.remove(nAsasuppr.getbarresDepart());
-               tabnAs.remove(nAsasuppr);
-           }
-           if (typeNoeud==2){
-               NoeudAppuiDouble nAdasuppr = new NoeudAppuiDouble();
-               
-               nAdasuppr=(NoeudAppuiDouble)noeuasuppr;
-               listBarres.remove(nAdasuppr.getbarresArrivee());
-               listBarres.remove(nAdasuppr.getbarresDepart());
-               tabnAd.remove(nAdasuppr);
-           }
-           affichnoeud(tabns,tabnAs,tabnAd);
-           System.out.println("");
-           
-           
-           
-           
-        }
-        System.out.println(" (1) afficher le treillis");
-        System.out.println(" (2) creer un nouveau noeud");
-        System.out.println(" (3) créer une nouvelle barre entre deux noeuds existants");
-        System.out.println(" (4) supprimer une barre");
-        System.out.println(" (5) supprimer une noeud");
-        System.out.println(" (0) quitter");
-        choix = Lire.i();
-        }
-    }
 
     /**
      * @return the listBarres
