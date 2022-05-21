@@ -11,9 +11,7 @@ package fr.insa.bayer.projetinfolne;
 public class Vecteur2D {
     private double vx;
     private double vy;
-    //private Noeud noeud;
-    //private double coefDir;
-    //private double valeur;
+ 
     
     public Vecteur2D(double cx,double cy ){
         this.vx=cx;
