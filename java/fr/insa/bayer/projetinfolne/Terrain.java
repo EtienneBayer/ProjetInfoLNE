@@ -14,7 +14,7 @@ public class Terrain {
     private double xMax;
     private double yMin;
     private double yMax;
-    private ArrayList<TriangleTerrain> triangles;
+    
     
     //constructeur 
     public Terrain (double xMin,double xMax,double yMin,double yMax){
@@ -22,7 +22,7 @@ public class Terrain {
         this.xMax = xMax;
         this.yMin = yMin;
         this.yMax = yMax;
-        this.triangles = new ArrayList<TriangleTerrain>();
+       
     }
     
     // get - set
@@ -38,9 +38,7 @@ public class Terrain {
     public double getyMax() {    
         return yMax;
     }
-    public ArrayList<TriangleTerrain> getTriangles(){
-        return this.triangles;
-    }
+    
     public void setxMin(double xMin) {
         this.xMin = xMin;
     }
@@ -51,19 +49,14 @@ public class Terrain {
         this.yMax = yMax;
     }
     
-    //add
-    public void addTriangle(TriangleTerrain triangle){
-        this.triangles.add(triangle);
-    }
+   
     
 
     //méthodes normales
     @Override
     public String toString() {
         String res = "Terrain : xMin: "+this.xMin+" xMax: "+this.xMax+" yMin: "+this.yMin+" yMax: "+this.yMax+"\n"; 
-        for(int i=0;i<this.triangles.size();i++){
-            res = res + this.triangles.get(i).toString();
-        }
+
         return res;
     }
    

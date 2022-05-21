@@ -218,7 +218,8 @@ public class Matrice {
         return id;
     }
     
-    public static Matrice matTest1(int n){
+    /**
+       public static Matrice matTest1(int n){
         Matrice mat = new Matrice(n,n);
         double k=0;
         for(int i=0;i<n;i++){
@@ -256,7 +257,7 @@ public class Matrice {
         }
         return m;
     }
-    
+    **/
     public static Matrice creeVecteur (double[] coeffs){
         Matrice mat = new Matrice(coeffs.length,1);
         for(int i=0;i<coeffs.length;i++){
@@ -264,13 +265,13 @@ public class Matrice {
         }
         return mat;
     }
-    
+    /**
     public static Matrice test1(double pz) {
         Matrice m;
         m = matAleaZeroUnDeux(4,6,pz);  //construit une matrice avec P(0) = pz et P(1)=P(2)
         return m;
     }
-    
+    **/
     //c'est mieux de faire des méthodes statiques pour les concaténations
     public Matrice concatLig (Matrice mat2){
         int nl1 = this.nbrLig;
@@ -367,7 +368,7 @@ public class Matrice {
     public static int intAlea (int bMin, int bMax){
         return (int) ( (Math.random()*(bMax-bMin))+ bMin );
     }
-    
+    /**
     public static void test2(){
         int nl = intAlea(2,4);
         int nc = intAlea(2,4);
@@ -383,7 +384,7 @@ public class Matrice {
         Mbis = Mbis.subCols(0, nc-1);
         System.out.println(Mbis.toString());
     }
-    
+    **/
     public Matrice add(Matrice m2) {
         if (this.getNbrLig() != m2.getNbrLig() || this.getNbrCol() != m2.getNbrCol()) {
             throw new Error("tailles incompatibles pour add");
@@ -427,13 +428,13 @@ public class Matrice {
         }
         return res;
     }
-    
+    /**
     public static void test3(){
         Matrice m = Matrice.matTest1(3);
         System.out.println("m*m^2 :");
         System.out.println(m.add(m.mult(m)).toString());
     }
-    
+    **/
     public int permuteLigne(int l1, int l2){
         int egal=0;  //compte le nb de coeffs égaux entre les deux lignes
         double temp;
@@ -502,7 +503,7 @@ public class Matrice {
         for(col=0;col<this.nbrCol-2;col++){  //ne traite ni la dernière colonne (coeffs) ni l'avant dernière (élément diagonal)
             System.out.println("etape "+col+" :");
             //if(this.coeffs[col][col]==0){  //si pivot nul
-                int iMax = this.lignePlusGrandPivot(col);
+                int iMax = this.lignePlusGrandPivot(col); //il regarde le plus grand pivot de la ligne actuelle
                 if(iMax==-1){
                     System.out.println("pas de pivot trouve");
                     System.out.println("matrice non inversible");  
@@ -534,7 +535,7 @@ public class Matrice {
         resultat.signature = sigPermut;
         return resultat;
     }
-    
+    /**
     //test du pivot de Gauss sur les matrices MatTest1 et MatTest2 :
     public static void test4 (int n){  
         //création des coeffs d'un vecteur ;
@@ -559,7 +560,7 @@ public class Matrice {
         System.out.println(m.toString());
         m.descenteGauss();
     }
-    
+    **/
      public ResGauss remonteeGauss(){  //similaire à descente Gauss
         int col; //compteur de étapes = nombre de colonnes de la matrice à inverser
         ResGauss resultat = new ResGauss();
@@ -718,6 +719,7 @@ public class Matrice {
             return d;
         }
     }
+    /**
      public Double Angle2 (Noeud Nd, Noeud Na){
        double deltaX = Na.getPx()-Nd.getPx();
        double deltaY =Na.getPy()-Nd.getPy();
@@ -760,6 +762,7 @@ public class Matrice {
         return Math.atan(quotient);
         
     }
+    * */
     //ULTRA IMPORTANT dans l'exemple que nous étudions, l'axe des y est vers le BAS !!!!!!!!!!!!!!!!!!!!!!!!! j'en ai transpiré !!!!!!
       public double Angle_barre5(Barre barre,Noeud noeud){                         // c'est une méthode compliqué à comprendre sans schéma
        double deltaX = barre.NoeudOppose(noeud, barre).getPx()-noeud.getPx();     // On calcule l'angle avec artan, tan=(Pya-Pyd)/(Pxa-Pxd)
@@ -802,7 +805,7 @@ public class Matrice {
     //On sait que cos = adjacent/hypothenuse
     //Avec adjacent = X(autre point)-X(ce point)
     //Et hypothenuse => pythagore
-    
+    /**
      public double cosAlpha(Barre b,Noeud n) {
         Noeud Nd=n;
         Noeud Na=b.NoeudOppose(Nd, b);
@@ -827,6 +830,7 @@ public class Matrice {
         salpha = (Na.getPy()-Nd.getPx())/hypothenuse;
         return salpha;
     }
+    * */
      public  int  nbrInconnues(Object noeud){
            if (noeud.getClass() == NoeudSimple.class) {
             return(0);

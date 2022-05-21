@@ -193,7 +193,7 @@ public class Treillis {
     
     public void testMatriceTreillis (){
         Terrain terrain = new Terrain(-50, 50, -50, 50);            //creation terrain
-        TriangleTerrain.test1(); //TT de coordonnées 00 ,0-2, 11    creation triangle terrain
+       
         
         NoeudAppuiDouble S1 = new NoeudAppuiDouble(1,0, 0);          //creation des noeuds
         NoeudAppuiSimple S2 = new NoeudAppuiSimple(2,0, 2);

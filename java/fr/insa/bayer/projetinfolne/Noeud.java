@@ -104,7 +104,7 @@ public abstract class Noeud {
     
     
     public void demandePx(){
-        System.out.println(" quelle es la coordonnee px");
+        System.out.println(" quelle est la coordonnee px");
        double pX=Lire.d();  
         this.px=pX  ;
     }

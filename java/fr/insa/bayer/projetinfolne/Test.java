@@ -19,14 +19,9 @@ import java.util.Date;
  */
 public class Test {
     public static void main (String[] args){
-        /**
-        Vecteur2D v1 =new Vecteur2D(0, 0) ;
-        v1=v1.creerVecteur();
-        System.out.println(v1.toString());
-        NoeudSimple ns = new NoeudSimple();
-        ns=ns.creerNoeudSimple();
-        System.out.println(ns.toString());
-          **/     
+        
+        
+               
         ArrayList<Barre>listBarres = new ArrayList<Barre>();
         ArrayList<Noeud>listNoeuds = new ArrayList<Noeud>();
         Treillis treillis = new Treillis(listBarres,listNoeuds);
